@@ -14,6 +14,7 @@ import {
   Truck,
   ChevronRight,
   Sparkles,
+  ArrowRight,
 } from "lucide-react";
 import Image from "next/image";
 import Header from "@/components/Header";
@@ -94,7 +95,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="py-24 bg-white">
         <div className="container px-6 mx-auto">
           <div className="max-w-3xl mx-auto text-center">
@@ -159,7 +159,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonial Section */}
       <section className="py-24 bg-gray-50">
         <div className="container px-6 mx-auto">
           <div className="max-w-4xl mx-auto text-center">
@@ -219,11 +218,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="py-24 bg-white">
         <div className="container px-6 mx-auto">
-          <div className="max-w-6xl p-12 mx-auto bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl shadow-xl">
-            <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div className="max-w-6xl p-12 mx-auto bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl shadow-xl relative overflow-hidden">
+            <div className="absolute -top-20 -right-20 w-64 h-64 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
+
+            <div className="grid items-center gap-12 lg:grid-cols-2 relative z-10">
               <div>
                 <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl font-display leading-tight">
                   Ready for Professional-Grade Protection?
@@ -233,18 +233,12 @@ export default function Home() {
                   and materials.
                 </p>
               </div>
-              <div className="flex flex-col space-y-4">
-                <Button
-                  size="lg"
-                  className="bg-white text-indigo-600 hover:bg-gray-50 font-medium"
-                >
+              <div className="flex flex-col space-y-4 sm:space-y-0 sm:flex-row sm:space-x-4 sm:justify-end">
+                <Button size="lg" variant="cta" className="shadow-lg">
                   Start Designing Now
+                  <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
                 </Button>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="text-white border-white hover:bg-white/10 font-medium"
-                >
+                <Button size="lg" variant="outline-white">
                   See How It Works
                 </Button>
               </div>
