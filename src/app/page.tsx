@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   Truck,
   ChevronRight,
+  Sparkles,
 } from "lucide-react";
 import Image from "next/image";
 import Header from "@/components/Header";
@@ -23,26 +24,29 @@ export default function Home() {
     <div className="min-h-screen bg-white antialiased">
       <Header />
 
-      <section className="relative py-20 overflow-hidden bg-gradient-to-br from-indigo-50 via-white to-purple-50 lg:py-28">
+      <section className="relative h-[calc(100vh-80px)] min-h-[600px] max-h-[800px] flex items-center bg-gradient-to-br from-indigo-50 via-white to-purple-50">
         <div className="absolute inset-0 opacity-10 [background:radial-gradient(125%_125%_at_50%_10%,#6366f1_40%,transparent_100%)]"></div>
         <div className="container px-6 mx-auto">
-          <div className="grid items-center gap-16 lg:grid-cols-2">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
             <div className="relative z-10">
-              <Badge variant="secondary" className="mb-6 font-medium">
-                Premium Custom Phone Cases
+              <Badge variant="secondary" className="mb-4 font-medium group">
+                <Sparkles className="w-3.5 h-3.5 mr-1.5 transition-transform group-hover:rotate-12" />
+                <span className="tracking-wide">
+                  Premium Custom Phone Cases
+                </span>
               </Badge>
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl font-display leading-tight">
+              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-5xl xl:text-6xl font-display leading-tight">
                 Elevate Your Device <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
                   With Premium Protection
                 </span>
               </h1>
-              <p className="mt-6 text-lg leading-relaxed text-gray-600 max-w-[36rem]">
+              <p className="mt-4 text-lg leading-relaxed text-gray-600 max-w-[36rem]">
                 Transform your favorite memories into museum-quality phone cases
                 with our professional-grade printing technology and durable
                 materials.
               </p>
-              <div className="flex flex-col mt-10 gap-y-4 sm:flex-row sm:gap-x-6">
+              <div className="flex flex-col mt-8 gap-y-3 sm:flex-row sm:gap-x-4">
                 <Button size="lg" className="group">
                   Start Designing
                   <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
@@ -56,7 +60,7 @@ export default function Home() {
                 </Button>
               </div>
 
-              <div className="flex items-center mt-12 space-x-8">
+              <div className="flex items-center mt-10 space-x-6">
                 {["4.9/5 Stars", "10K+ Reviews", "Free Shipping"].map(
                   (item) => (
                     <div key={item} className="flex items-center">
@@ -69,22 +73,21 @@ export default function Home() {
                 )}
               </div>
             </div>
-            <div className="relative z-10">
-              <div className="relative aspect-[9/16] w-full max-w-md mx-auto overflow-hidden rounded-[2rem] bg-gray-100 shadow-2xl ring-1 ring-gray-900/5">
+            <div className="relative z-10 flex justify-center">
+              <div className="relative aspect-[9/16] w-full max-w-[280px] sm:max-w-[320px]">
                 <Image
-                  src="/placeholder-case.jpg"
+                  src="/images/phone case.png"
                   alt="Premium custom phone case example"
-                  fill
-                  className="object-cover object-center"
+                  width={320}
+                  height={569}
+                  className="object-contain object-center"
                   priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/30 to-transparent"></div>
-              </div>
-              <div className="absolute -bottom-6 -left-6">
-                <Badge className="px-5 py-2.5 text-sm font-medium bg-white shadow-md">
-                  Starting at{" "}
-                  <span className="ml-1 font-bold text-indigo-600">$24.99</span>
-                </Badge>
+                <div className="absolute bottom-0 left-0 translate-y-2">
+                  <Badge variant="default" className="px-4 py-2 shadow-md">
+                    Starting at <span className="ml-1 font-bold">$24.99</span>
+                  </Badge>
+                </div>
               </div>
             </div>
           </div>
