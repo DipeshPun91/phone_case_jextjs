@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Sparkles } from "lucide-react";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -35,7 +36,7 @@ const Header = () => {
             Sign In
           </Button>
           <Button className="hidden md:inline-flex group">
-            Create Design
+            <Link href="/design/create-design">Create Design</Link>
             <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
           </Button>
         </div>

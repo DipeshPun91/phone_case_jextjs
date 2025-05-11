@@ -19,6 +19,7 @@ import {
 import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -49,7 +50,7 @@ export default function Home() {
               </p>
               <div className="flex flex-col mt-8 gap-y-3 sm:flex-row sm:gap-x-4">
                 <Button size="lg" className="group">
-                  Start Designing
+                  <Link href="/design/create-design">Start Designing</Link>
                   <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
                 </Button>
                 <Button
