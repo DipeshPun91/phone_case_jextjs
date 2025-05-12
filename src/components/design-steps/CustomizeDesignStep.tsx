@@ -10,7 +10,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Move } from "lucide-react";
+import { Move, ZoomIn, ZoomOut } from "lucide-react";
+import Image from "next/image";
 
 interface Design {
   model: string;
@@ -91,113 +92,257 @@ export function CustomizeDesignStep({
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-      <div className="relative">
-        <h2 className="text-2xl font-bold mb-6">Customize Your Design</h2>
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 xl:gap-12">
+      {/* Design Preview Section */}
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Design Preview
+          </h2>
+          <p className="text-gray-600">
+            Adjust your image to fit perfectly on the case
+          </p>
+        </div>
 
         {/* Phone Case Preview */}
-        <div
-          ref={canvasRef}
-          className="relative mx-auto w-full max-w-[300px] aspect-[9/16] bg-gray-100 rounded-3xl border-8 border-gray-800 overflow-hidden shadow-lg"
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-        >
+        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
           <div
-            className="absolute inset-0 bg-contain bg-no-repeat bg-center"
-            style={{
-              backgroundImage: `url(${image})`,
-              backgroundPosition: `${design.imagePosition.x}% ${design.imagePosition.y}%`,
-              backgroundSize: `${design.imageScale}%`,
-              cursor: isDragging ? "grabbing" : "grab",
-            }}
-          />
-          <div
-            className="absolute inset-0 pointer-events-none border-[12px] border-transparent"
-            style={{
-              boxShadow: "inset 0 0 0 2px rgba(0,0,0,0.1)",
-            }}
-          />
+            ref={canvasRef}
+            className="relative mx-auto w-full max-w-[280px] aspect-[9/16] bg-gray-50 rounded-3xl border-8 border-gray-900 overflow-hidden shadow-md"
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+          >
+            <div
+              className="absolute inset-0 bg-contain bg-no-repeat bg-center"
+              style={{
+                backgroundImage: `url(${image})`,
+                backgroundPosition: `${design.imagePosition.x}% ${design.imagePosition.y}%`,
+                backgroundSize: `${design.imageScale}%`,
+                cursor: isDragging ? "grabbing" : "grab",
+              }}
+            />
+            <div
+              className="absolute inset-0 pointer-events-none border-[12px] border-transparent"
+              style={{ boxShadow: "inset 0 0 0 2px rgba(0,0,0,0.05)" }}
+            />
+          </div>
         </div>
 
         {/* Image Controls */}
-        <div className="mt-6">
-          <Label className="block mb-2">Adjust Image Position</Label>
-          <div className="flex items-center gap-2 mb-4">
-            <Move className="w-5 h-5 text-gray-500" />
-            <span className="text-sm text-gray-500">
-              Drag image to reposition
-            </span>
-          </div>
+        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+          <div className="space-y-4">
+            <div>
+              <Label className="block text-sm font-medium text-gray-700 mb-2">
+                Image Position
+              </Label>
+              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                <Move className="w-5 h-5 text-gray-500 flex-shrink-0" />
+                <p className="text-sm text-gray-600">
+                  Drag the image to adjust its position
+                </p>
+              </div>
+            </div>
 
-          <Label className="block mb-2">Zoom ({design.imageScale}%)</Label>
-          <Input
-            type="range"
-            min="50"
-            max="150"
-            value={design.imageScale}
-            onChange={handleZoom}
-          />
+            <div>
+              <div className="flex justify-between items-center mb-2">
+                <Label className="text-sm font-medium text-gray-700">
+                  Zoom Level
+                </Label>
+                <span className="text-sm font-medium text-indigo-600">
+                  {design.imageScale}%
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <ZoomOut className="w-5 h-5 text-gray-400" />
+                <Input
+                  type="range"
+                  min="50"
+                  max="150"
+                  value={design.imageScale}
+                  onChange={handleZoom}
+                  className="flex-1"
+                />
+                <ZoomIn className="w-5 h-5 text-gray-400" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* Configuration Form */}
-      <div>
-        <h2 className="text-2xl font-bold mb-6">Case Specifications</h2>
+      {/* Configuration Section */}
+      <div className="space-y-6">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            Case Specifications
+          </h2>
+          <p className="text-gray-600">Select your preferred case options</p>
+        </div>
 
-        <div className="space-y-6">
-          <div>
-            <Label htmlFor="model">Phone Model</Label>
+        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">
+          {/* Phone Model Selection */}
+          <div className="space-y-2">
+            <Label className="text-sm font-medium text-gray-700">
+              Phone Model
+            </Label>
             <Select value={design.model} onValueChange={handleModelChange}>
-              <SelectTrigger className="w-full mt-2">
+              <SelectTrigger className="w-full">
                 <SelectValue placeholder="Select your phone model" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="iphone-15">iPhone 15</SelectItem>
-                <SelectItem value="iphone-15-pro">iPhone 15 Pro</SelectItem>
-                <SelectItem value="samsung-s23">Samsung S23</SelectItem>
-                <SelectItem value="google-pixel-7">Google Pixel 7</SelectItem>
+                <SelectItem
+                  value="iphone-15"
+                  className="flex items-center gap-2"
+                >
+                  <Image
+                    src="/icons/iphone.svg"
+                    alt="iPhone"
+                    width={16}
+                    height={16}
+                    className="opacity-70"
+                  />
+                  iPhone 15
+                </SelectItem>
+                <SelectItem
+                  value="iphone-15-pro"
+                  className="flex items-center gap-2"
+                >
+                  <Image
+                    src="/icons/iphone.svg"
+                    alt="iPhone Pro"
+                    width={16}
+                    height={16}
+                    className="opacity-70"
+                  />
+                  iPhone 15 Pro
+                </SelectItem>
+                <SelectItem
+                  value="samsung-s23"
+                  className="flex items-center gap-2"
+                >
+                  <Image
+                    src="/icons/samsung.svg"
+                    alt="Samsung"
+                    width={16}
+                    height={16}
+                    className="opacity-70"
+                  />
+                  Samsung S23
+                </SelectItem>
+                <SelectItem
+                  value="google-pixel-7"
+                  className="flex items-center gap-2"
+                >
+                  <Image
+                    src="/icons/pixel.svg"
+                    alt="Google Pixel"
+                    width={16}
+                    height={16}
+                    className="opacity-70"
+                  />
+                  Google Pixel 7
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
 
-          <div>
-            <Label>Material</Label>
+          {/* Material Selection */}
+          <div className="space-y-2">
+            <Label className="text-sm font-medium text-gray-700">
+              Case Material
+            </Label>
             <RadioGroup
               value={design.material}
               onValueChange={handleMaterialChange}
-              className="mt-2"
+              className="grid grid-cols-3 gap-3"
             >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="glossy" id="glossy" />
-                <Label htmlFor="glossy">Glossy</Label>
+              <div>
+                <RadioGroupItem
+                  value="glossy"
+                  id="glossy"
+                  className="peer hidden"
+                />
+                <Label
+                  htmlFor="glossy"
+                  className="flex flex-col items-center justify-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer peer-data-[state=checked]:border-indigo-500 peer-data-[state=checked]:bg-indigo-50 hover:bg-gray-50 transition-colors"
+                >
+                  <div className="w-8 h-8 bg-gradient-to-br from-gray-100 to-gray-300 rounded-full mb-2 shadow-inner" />
+                  <span className="text-sm">Glossy</span>
+                </Label>
               </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="matte" id="matte" />
-                <Label htmlFor="matte">Matte</Label>
+              <div>
+                <RadioGroupItem
+                  value="matte"
+                  id="matte"
+                  className="peer hidden"
+                />
+                <Label
+                  htmlFor="matte"
+                  className="flex flex-col items-center justify-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer peer-data-[state=checked]:border-indigo-500 peer-data-[state=checked]:bg-indigo-50 hover:bg-gray-50 transition-colors"
+                >
+                  <div className="w-8 h-8 bg-gradient-to-br from-gray-200 to-gray-400 rounded-full mb-2 shadow-inner" />
+                  <span className="text-sm">Matte</span>
+                </Label>
               </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="clear" id="clear" />
-                <Label htmlFor="clear">Clear</Label>
+              <div>
+                <RadioGroupItem
+                  value="clear"
+                  id="clear"
+                  className="peer hidden"
+                />
+                <Label
+                  htmlFor="clear"
+                  className="flex flex-col items-center justify-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer peer-data-[state=checked]:border-indigo-500 peer-data-[state=checked]:bg-indigo-50 hover:bg-gray-50 transition-colors"
+                >
+                  <div className="w-8 h-8 bg-gradient-to-br from-blue-50 to-blue-100 rounded-full mb-2 shadow-inner border border-gray-300" />
+                  <span className="text-sm">Clear</span>
+                </Label>
               </div>
             </RadioGroup>
           </div>
 
-          <div>
-            <Label>Finishing</Label>
+          {/* Finishing Selection */}
+          <div className="space-y-2">
+            <Label className="text-sm font-medium text-gray-700">
+              Finishing
+            </Label>
             <RadioGroup
               value={design.finish}
               onValueChange={handleFinishChange}
-              className="mt-2"
+              className="grid grid-cols-2 gap-3"
             >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="standard" id="standard" />
-                <Label htmlFor="standard">Standard</Label>
+              <div>
+                <RadioGroupItem
+                  value="standard"
+                  id="standard"
+                  className="peer hidden"
+                />
+                <Label
+                  htmlFor="standard"
+                  className="flex flex-col items-center justify-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer peer-data-[state=checked]:border-indigo-500 peer-data-[state=checked]:bg-indigo-50 hover:bg-gray-50 transition-colors"
+                >
+                  <span className="text-sm">Standard</span>
+                  <span className="text-xs text-gray-500 mt-1">
+                    Basic protection
+                  </span>
+                </Label>
               </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="premium" id="premium" />
-                <Label htmlFor="premium">Premium (Scratch Resistant)</Label>
+              <div>
+                <RadioGroupItem
+                  value="premium"
+                  id="premium"
+                  className="peer hidden"
+                />
+                <Label
+                  htmlFor="premium"
+                  className="flex flex-col items-center justify-center p-3 border-2 border-gray-200 rounded-lg cursor-pointer peer-data-[state=checked]:border-indigo-500 peer-data-[state=checked]:bg-indigo-50 hover:bg-gray-50 transition-colors"
+                >
+                  <span className="text-sm">Premium</span>
+                  <span className="text-xs text-gray-500 mt-1">
+                    Scratch resistant
+                  </span>
+                </Label>
               </div>
             </RadioGroup>
           </div>
