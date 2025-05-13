@@ -5,6 +5,8 @@ import { ImageUploadStep } from "@/components/design-steps/ImageUploadStep";
 import { CustomizeDesignStep } from "@/components/design-steps/CustomizeDesignStep";
 import { OrderSummaryStep } from "@/components/design-steps/OrderSummaryStep";
 import { NavigationButtons } from "@/components/design-steps/NavigationButtons";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function CreateDesign() {
   const [step, setStep] = useState<1 | 2 | 3>(1);
@@ -35,41 +37,56 @@ export default function CreateDesign() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <ProgressSteps currentStep={step} totalSteps={3} />
+    <div className="flex flex-col min-h-screen bg-gray-50">
+      <Header />
 
-      {step === 1 && (
-        <ImageUploadStep
-          onImageUpload={(img) => {
-            setImage(img);
-            setStep(2);
-          }}
-        />
-      )}
+      <main className="flex-1">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="bg-white rounded-xl shadow-sm p-6 sm:p-8 mb-8">
+            <ProgressSteps currentStep={step} totalSteps={3} />
+          </div>
 
-      {step === 2 && image && (
-        <CustomizeDesignStep
-          image={image}
-          design={design}
-          onDesignChange={setDesign}
-        />
-      )}
+          <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+            {step === 1 && (
+              <ImageUploadStep
+                onImageUpload={(img) => {
+                  setImage(img);
+                  setStep(2);
+                }}
+              />
+            )}
 
-      {step === 3 && image && (
-        <OrderSummaryStep
-          image={image}
-          design={design}
-          onCompleteOrder={handleCompleteOrder}
-        />
-      )}
+            {step === 2 && image && (
+              <CustomizeDesignStep
+                image={image}
+                design={design}
+                onDesignChange={setDesign}
+              />
+            )}
 
-      <NavigationButtons
-        currentStep={step}
-        totalSteps={3}
-        onNext={handleNext}
-        onBack={handleBack}
-        nextDisabled={step === 2 && !design.model}
-      />
+            {step === 3 && image && (
+              <OrderSummaryStep
+                image={image}
+                design={design}
+                onCompleteOrder={handleCompleteOrder}
+              />
+            )}
+          </div>
+
+          <div className="mt-8 bg-white rounded-xl shadow-sm p-6">
+            <NavigationButtons
+              currentStep={step}
+              totalSteps={3}
+              onNext={handleNext}
+              onBack={handleBack}
+              nextDisabled={step === 2 && !design.model}
+              nextLabel={step === 2 ? "Review Design" : undefined}
+            />
+          </div>
+        </div>
+      </main>
+
+      <Footer />
     </div>
   );
 }
