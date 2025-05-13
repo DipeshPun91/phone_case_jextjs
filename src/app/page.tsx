@@ -49,10 +49,12 @@ export default function Home() {
                 materials.
               </p>
               <div className="flex flex-col mt-8 gap-y-3 sm:flex-row sm:gap-x-4">
-                <Button size="lg" className="group">
-                  <Link href="/design/create-design">Start Designing</Link>
-                  <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
-                </Button>
+                <Link href="/design/create-design">
+                  <Button size="lg" className="group">
+                    Start Designing
+                    <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </Link>
                 <Button
                   size="lg"
                   variant="outline"

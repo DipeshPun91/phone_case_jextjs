@@ -35,10 +35,12 @@ const Header = () => {
           >
             Sign In
           </Button>
-          <Button className="hidden md:inline-flex group">
-            <Link href="/design/create-design">Create Design</Link>
-            <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
-          </Button>
+          <Link href="/design/create-design">
+            <Button className="hidden md:inline-flex group">
+              Create Design
+              <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
+            </Button>
+          </Link>
         </div>
       </div>
     </nav>
