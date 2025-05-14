@@ -34,29 +34,42 @@ export function CustomizeDesignStep({
 }: CustomizeDesignStepProps) {
   const canvasRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [startPos, setStartPos] = useState({ x: 0, y: 0 });
+  const [dragStart, setDragStart] = useState({
+    pos: { x: 0, y: 0 },
+    offset: { x: 0, y: 0 },
+  });
 
   const handleMouseDown = (e: React.MouseEvent) => {
+    if (!canvasRef.current) return;
+
+    const rect = canvasRef.current.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    const offsetY = e.clientY - rect.top;
+
     setIsDragging(true);
-    setStartPos({ x: e.clientX, y: e.clientY });
+    setDragStart({
+      pos: { x: design.imagePosition.x, y: design.imagePosition.y },
+      offset: { x: offsetX, y: offsetY },
+    });
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDragging || !canvasRef.current) return;
 
-    const deltaX = e.clientX - startPos.x;
-    const deltaY = e.clientY - startPos.y;
+    const rect = canvasRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-    const newDesign = {
+    const newX = dragStart.pos.x + (x - dragStart.offset.x);
+    const newY = dragStart.pos.y + (y - dragStart.offset.y);
+
+    onDesignChange({
       ...design,
       imagePosition: {
-        x: Math.max(0, Math.min(100, design.imagePosition.x + deltaX / 5)),
-        y: Math.max(0, Math.min(100, design.imagePosition.y + deltaY / 5)),
+        x: newX,
+        y: newY,
       },
-    };
-
-    onDesignChange(newDesign);
-    setStartPos({ x: e.clientX, y: e.clientY });
+    });
   };
 
   const handleMouseUp = () => {
@@ -93,7 +106,6 @@ export function CustomizeDesignStep({
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 xl:gap-12">
-      {/* Design Preview Section */}
       <div className="space-y-6">
         <div>
           <h2 className="text-2xl font-bold text-gray-900 mb-2">
@@ -104,33 +116,36 @@ export function CustomizeDesignStep({
           </p>
         </div>
 
-        {/* Phone Case Preview */}
-        <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+        <div
+          ref={canvasRef}
+          className="relative mx-auto w-full h-[500px] rounded-3xl overflow-hidden bg-gray-50"
+        >
           <div
-            ref={canvasRef}
-            className="relative mx-auto w-full max-w-[280px] aspect-[9/16] bg-gray-50 rounded-3xl border-8 border-gray-900 overflow-hidden shadow-md"
+            className="absolute inset-0 bg-no-repeat"
+            style={{
+              backgroundImage: `url(${image})`,
+              backgroundPosition: `${design.imagePosition.x}px ${design.imagePosition.y}px`,
+              backgroundSize: `${design.imageScale}%`,
+              cursor: isDragging ? "grabbing" : "grab",
+            }}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseUp}
-          >
-            <div
-              className="absolute inset-0 bg-contain bg-no-repeat bg-center"
-              style={{
-                backgroundImage: `url(${image})`,
-                backgroundPosition: `${design.imagePosition.x}% ${design.imagePosition.y}%`,
-                backgroundSize: `${design.imageScale}%`,
-                cursor: isDragging ? "grabbing" : "grab",
-              }}
-            />
-            <div
-              className="absolute inset-0 pointer-events-none border-[12px] border-transparent"
-              style={{ boxShadow: "inset 0 0 0 2px rgba(0,0,0,0.05)" }}
-            />
+          />
+
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10 p-4">
+            <div className="relative w-full h-full max-w-[280px] max-h-[500px]">
+              <Image
+                src="/images/phone-template.png"
+                alt="Phone template"
+                fill
+                className="object-contain"
+              />
+            </div>
           </div>
         </div>
 
-        {/* Image Controls */}
         <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
           <div className="space-y-4">
             <div>
