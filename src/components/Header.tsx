@@ -1,9 +1,22 @@
+"use client";
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, Sparkles } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
+  const pathname = usePathname();
+
+  const navItems = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/menu/about" },
+    { name: "Design", path: "/menu/design" },
+    { name: "Gallery", path: "/menu/gallery" },
+    { name: "Pricing", path: "/menu/pricing" },
+  ];
+
   return (
     <nav className="sticky top-0 z-50 bg-white border-b border-gray-100 shadow-sm">
       <div className="container flex items-center justify-between h-20 px-6 mx-auto">
@@ -14,18 +27,18 @@ const Header = () => {
           </span>
         </div>
         <div className="hidden space-x-8 md:flex">
-          {["Home", "Design", "Gallery", "Pricing", "About"].map((item) => (
-            <a
-              key={item}
-              href="#"
+          {navItems.map((item) => (
+            <Link
+              key={item.name}
+              href={item.path}
               className={`text-sm font-medium transition-colors ${
-                item === "Home"
+                pathname === item.path
                   ? "text-indigo-600"
                   : "text-gray-600 hover:text-indigo-600"
               }`}
             >
-              {item}
-            </a>
+              {item.name}
+            </Link>
           ))}
         </div>
         <div className="flex items-center space-x-4">
