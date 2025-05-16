@@ -96,7 +96,7 @@ export default function PricingPage() {
                   ))}
                 </ul>
                 <div className="mt-8">
-                  <Link href="/design/create-design">
+                  <Link href="/menu/create-design">
                     <Button
                       size="lg"
                       className={`w-full group ${

@@ -47,7 +47,7 @@ export default function AboutPage() {
                 technology and the highest quality materials.
               </p>
               <div className="mt-8">
-                <Link href="/design/create-design">
+                <Link href="/menu/create-design">
                   <Button size="lg" className="group">
                     Create Your Case
                     <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />

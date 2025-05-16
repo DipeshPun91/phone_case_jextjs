@@ -104,7 +104,7 @@ export default function GalleryPage() {
           </div>
 
           <div className="mt-16 text-center">
-            <Link href="/design/create-design">
+            <Link href="/menu/create-design">
               <Button size="lg" className="group">
                 Create Your Own Design
                 <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />

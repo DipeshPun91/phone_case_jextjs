@@ -62,7 +62,7 @@ export default function DesignPage() {
           </div>
 
           <div className="mt-16 text-center">
-            <Link href="/design/create-design">
+            <Link href="/menu/create-design">
               <Button size="lg" className="group">
                 Start Designing Now
                 <ChevronRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
